@@ -27,38 +27,38 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  _getTipAmount() => _billAmount * _tipPercentage / 100;
+  imcCalc() => valueWeight / valueHeight * valueHeight;
 
-  static const defaultBillAmount = 0.0;
+  static const valueBaseWeight = 0.0;
 
-  static const defaultTipPercentage = 0;
+  static const valueBaseHeight = 0;
 
-  final _billAmountController =
-      TextEditingController(text: defaultBillAmount.toString());
+  final controllerWeight =
+      TextEditingController(text: valueBaseWeight.toString());
 
-  final _tipPercentageController =
-      TextEditingController(text: defaultTipPercentage.toString());
+  final controllerHeight =
+      TextEditingController(text: valueBaseHeight.toString());
 
-  double _billAmount = defaultBillAmount;
+  double valueWeight = valueBaseWeight;
 
-  int _tipPercentage = defaultTipPercentage;
+  int valueHeight = valueBaseHeight;
 
   @override
   void initState() {
     super.initState();
-    _billAmountController.addListener(_onBillAmountChanged);
-    _tipPercentageController.addListener(_onTipAmountChanged);
+    controllerWeight.addListener(_onBillAmountChanged);
+    controllerHeight.addListener(_onTipAmountChanged);
   }
 
   _onBillAmountChanged() {
     setState(() {
-      _billAmount = double.tryParse(_billAmountController.text) ?? 0.0;
+      valueWeight = double.tryParse(controllerWeight.text) ?? 0.0;
     });
   }
 
   _onTipAmountChanged() {
     setState(() {
-      _tipPercentage = int.tryParse(_tipPercentageController.text) ?? 0;
+      valueHeight = int.tryParse(controllerHeight.text) ?? 0;
     });
   }
 
@@ -80,11 +80,11 @@ class _MyHomePageState extends State<MyHomePage> {
               children: <Widget>[
                 TextFormField(
                   key: Key('billAmount'),
-                  controller: _billAmountController,
+                  controller: controllerWeight,
                   keyboardType: TextInputType.numberWithOptions(decimal: true),
                   decoration: InputDecoration(
                     hintText: "Digite o valor",
-                    labelText: "Altura (cm)",
+                    labelText: "Altura (m)",
                     labelStyle: TextStyle(
                       fontSize: 25,
                       letterSpacing: 3,
@@ -101,7 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 TextFormField(
                   key: Key("tipPercentage"),
-                  controller: _tipPercentageController,
+                  controller: controllerHeight,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     hintText: "Digite o valor",
@@ -141,7 +141,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Column(
                     children: [
                       AmountText(
-                        'Seu IMC é: ${_getTipAmount()}',
+                        'Seu IMC é: ${imcCalc()}',
                         key: Key('totalAmount'),
                       ),
                     ],
